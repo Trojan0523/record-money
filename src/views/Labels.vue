@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-  // const logo = require('@/assets/icons/label.svg');
   export default {
     name: 'Labels',
   };
