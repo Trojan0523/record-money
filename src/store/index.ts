@@ -5,7 +5,7 @@ import clone from '@/lib/clone';
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
-    recordList: [] as RecordItem[],
+    recordList: [] as RecordItem[]
   },
   mutations: {
     fetchRecords(state) {
@@ -18,7 +18,8 @@ const store = new Vuex.Store({
       store.commit('saveRecords');
     },
     saveRecords(state) {
-      window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
+      window.localStorage.setItem('recordList',
+        JSON.stringify(state.recordList));
     },
   },
   actions: {},

@@ -29,7 +29,7 @@
     record: RecordItem = {
       tags: [], notes: '', type: '-', amount: 0
     };
-    create(){
+    created(){
         this.$store.commit('fetchRecords')
     }
     onUpdateNotes(value: string) {
