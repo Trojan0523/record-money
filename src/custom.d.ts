@@ -1,10 +1,15 @@
 // define RecordItem Type
+type Rootstate = {
+  recordList:  RecordItem[];
+  tagList:  Tag[];
+  currentTag?: Tag;
+}
 type RecordItem = {
   tags: string[];
   notes: string;
   type: string;
   amount: number; // data type
-  createdAt?: Date; // class or constructor
+  createdAt?: string; // class or constructor
 }
 type Tag = {
   id: string;
