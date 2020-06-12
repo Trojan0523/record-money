@@ -23,24 +23,19 @@
     components: {Tabs, Tags, FromItem, NumberPad},
   })
   export default class Money extends Vue {
-    record: RecordItem = {
-      tags: [], notes: '', type: '-', amount: 0
-    };
-
-    recordTypeList = recordTypeList;
-
     get recordList() {
       return this.$store.state.recordList;
     }
-
+    recordTypeList = recordTypeList;
+    record: RecordItem = {
+      tags: [], notes: '', type: '-', amount: 0
+    };
     created() {
       this.$store.commit('fetchRecords');
     }
-
     onUpdateNotes(value: string) {
       this.record.notes = value;
     }
-
     saveRecord() {
       this.$store.commit('createRecord', this.record);
     }
@@ -51,7 +46,6 @@
         display: flex;
         flex-direction: column-reverse;
     }
-
     .notes {
         padding: 12px 0;
     }

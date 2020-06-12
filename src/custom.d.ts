@@ -1,5 +1,5 @@
 // define RecordItem Type
-type Rootstate = {
+type RootState = {
   recordList:  RecordItem[];
   tagList:  Tag[];
   currentTag?: Tag;

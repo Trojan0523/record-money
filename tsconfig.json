@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+//    add for resolving the ts error Parameter 'xxx' implicitly has an 'any' type
+//   "noImplicitAny": false,
     "target": "esnext",
     "module": "esnext",
     "strict": true,

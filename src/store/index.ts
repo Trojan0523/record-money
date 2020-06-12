@@ -10,7 +10,7 @@ const store = new Vuex.Store({
     recordList: [],
     tagList: [],
     currentTag: undefined
-  } as Rootstate,
+  } as RootState,
   mutations: {
     setCurrentTag(state, id: string) {
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
