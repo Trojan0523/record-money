@@ -4,9 +4,12 @@
         <Tabs :data-source="recordTypeList"
               :value.sync="record.type"/>
         <div class="notes">
-            <FromItem placeholder="在这里输入备注" field-name="备注" @update:value="onUpdateNotes"/>
+            <FromItem placeholder="在这里输入备注"
+                      field-name="备注"
+                      :value.sync="record.notes"
+                      />
         </div>
-        <Tags/>
+        <Tags @update:value="record.tags = $event"/>
     </Layout>
 </template>
 
@@ -26,18 +29,29 @@
     get recordList() {
       return this.$store.state.recordList;
     }
+
     recordTypeList = recordTypeList;
     record: RecordItem = {
       tags: [], notes: '', type: '-', amount: 0
     };
+
     created() {
       this.$store.commit('fetchRecords');
     }
+
     onUpdateNotes(value: string) {
       this.record.notes = value;
     }
+
     saveRecord() {
+      if (!this.record.tags || this.record.tags.length === 0) {
+        return window.alert('请至少选择一个标签');
+      }
       this.$store.commit('createRecord', this.record);
+      if (this.$store.state.createRecordError === null) {
+        window.alert('已保存');
+        this.record.notes = '';
+      }
     }
   }
 </script>
@@ -46,6 +60,7 @@
         display: flex;
         flex-direction: column-reverse;
     }
+
     .notes {
         padding: 12px 0;
     }
