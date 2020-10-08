@@ -19,13 +19,6 @@
       this.chart.setOption(this.options);
     }
 
-    watch() {
-      return {
-        options(newValue: EChartOption) {
-          this.chart.setOption(newValue);
-        }
-      };
-    }
     @Watch('options')
     onOptionsChange(newValue: EChartOption) {
       this.chart?.setOption(newValue);
