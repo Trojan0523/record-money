@@ -85,7 +85,6 @@
     }
 
     get x() {
-
       const keys = this.y.map(item => item.date);
       const values = this.y.map(item => item.value);
       return {
@@ -97,7 +96,13 @@
           type: 'category',
           data: keys,
           axisTick: {alignWithLabel: true},
-          axisLine: {lineStyle: {color: '#666'}}
+          axisLine: {lineStyle: {color: '#666'}},
+          axisLabel: {
+            formatter: function (value: string) {
+              // 格式化成月/日，只在第一个刻度显示年份
+                return value.substr(5);
+            }
+          }
         },
         yAxis: {
           type: 'value',
