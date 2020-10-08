@@ -72,18 +72,27 @@
         },
         xAxis: {
           type: 'category',
-          data: ['1', '2', '3', '4', '5', '6', '7']
+          data: ['1', '2', '3', '4', '5', '6', '7'],
+          axisTick: {alignWithLabel: true},
+          axisLine: {lineStyle: {color: '#666'}}
         },
         yAxis: {
           type: 'value',
           show: false
         },
         series: [{
+          symbol: 'circle',
+          symbolSize: 12,
+          itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
           data: [820, 932, 901, 934, 1290, 1330, 1320],
           type: 'line'
         }],
-        tooltip: {show:true}
-      }
+        tooltip: {
+          show: true, triggerOn: 'click',
+          position: 'top',
+          formatter: '{c}'
+        }
+      };
     }
 
     get recordList() {
@@ -116,6 +125,7 @@
     beforeCreate() {
       this.$store.commit('fetchRecords');
     }
+
     type = '-';
     recordTypeList = recordTypeList;
   }
@@ -126,10 +136,12 @@
         max-width: 100%;
         height: 400px;
     }
+
     .noResults {
         padding: 16px;
         text-align: center;
     }
+
     ::v-deep {
         .type-tabs-item {
             background: #C4C4C4;
@@ -170,10 +182,16 @@
         margin-left: 16px;
         color: #999;
     }
+
     .chart {
         width: 430%;
+
         &-wrapper {
             overflow: auto;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
         }
     }
 
