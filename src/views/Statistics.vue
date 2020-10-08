@@ -33,6 +33,8 @@
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
   import Chart from '@/components/Chart.vue';
+  import _ from 'lodash';
+  import day from 'dayjs';
 
   @Component({
     components: {Tabs, Chart}
@@ -56,15 +58,36 @@
     }
 
     tagString(tags: Tag[]) {
-      console.log(tags);
       return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
     }
 
     mounted() {
-      (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+      const div = (this.$refs.chartWrapper as HTMLDivElement);
+      div.scrollLeft = div.scrollWidth;
+    }
+
+    get y() {
+      const today = new Date();
+      const array = [];
+      for (let i = 0; i <= 29; i++) {
+        const dateString = day(today).subtract(i, 'day').format('YYYY-MM-DD');
+        const found = _.find(this.recordList, {createdAt: dateString});
+        array.push({date: dateString, value: found ? found.amount : 0});
+      }
+      array.sort((a, b) => {
+        if (a.date > b.date) {
+          return 1;
+        } else if (a.date === b.date) {
+          return -1;
+        }
+      });
+      return array;
     }
 
     get x() {
+
+      const keys = this.y.map(item => item.date);
+      const values = this.y.map(item => item.value);
       return {
         grid: {
           left: 0,
@@ -72,7 +95,7 @@
         },
         xAxis: {
           type: 'category',
-          data: ['1', '2', '3', '4', '5', '6', '7'],
+          data: keys,
           axisTick: {alignWithLabel: true},
           axisLine: {lineStyle: {color: '#666'}}
         },
@@ -84,7 +107,7 @@
           symbol: 'circle',
           symbolSize: 12,
           itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
-          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          data: values,
           type: 'line'
         }],
         tooltip: {
