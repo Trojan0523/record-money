@@ -2,6 +2,9 @@
     <div>
         <Layout>
             <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
+            <div class="chart-wrapper" ref="chartWrapper">
+                <Chart class="chart" :options="x"/>
+            </div>
             <ol v-if="groupList.length>0">
                 <li v-for="(group, index) in groupList" :key="index">
                     <h3 class="title">{{beautify(group.title)}} <span>￥{{group.total}}</span></h3>
@@ -29,9 +32,10 @@
   import recordTypeList from '@/constants/RecordTypeList';
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
+  import Chart from '@/components/Chart.vue';
 
   @Component({
-    components: {Tabs}
+    components: {Tabs, Chart}
   })
 
   export default class Statistics extends Vue {
@@ -54,6 +58,32 @@
     tagString(tags: Tag[]) {
       console.log(tags);
       return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
+    }
+
+    mounted() {
+      (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+    }
+
+    get x() {
+      return {
+        grid: {
+          left: 0,
+          right: 0
+        },
+        xAxis: {
+          type: 'category',
+          data: ['1', '2', '3', '4', '5', '6', '7']
+        },
+        yAxis: {
+          type: 'value',
+          show: false
+        },
+        series: [{
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          type: 'line'
+        }],
+        tooltip: {show:true}
+      }
     }
 
     get recordList() {
@@ -92,6 +122,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .echarts {
+        max-width: 100%;
+        height: 400px;
+    }
     .noResults {
         padding: 16px;
         text-align: center;
@@ -136,6 +170,11 @@
         margin-left: 16px;
         color: #999;
     }
-
+    .chart {
+        width: 430%;
+        &-wrapper {
+            overflow: auto;
+        }
+    }
 
 </style>
