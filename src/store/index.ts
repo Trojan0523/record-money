@@ -83,7 +83,7 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-  //  async mutations
+  //  async mutations => methods
   },
   modules: {}
 });
